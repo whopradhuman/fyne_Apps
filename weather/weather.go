@@ -45,7 +45,7 @@ func main() {
 
 	label2 := canvas.NewText(fmt.Sprintf("Country %s", weather.Sys.Country), color.White)
 	label3 := canvas.NewText(fmt.Sprintf("Wind Speed %.2f", weather.Wind.Speed), color.White)
-	label4 := canvas.NewText(fmt.Sprintf("Temperature %.2f", (weather.Main.Temp - 273.15)), color.White)
+	label4 := canvas.NewText(fmt.Sprintf("Temperature %.2f", weather.Main.Temp - 273.15), color.White)
 	label5 := canvas.NewText(fmt.Sprintf("Humidity %2d", weather.Main.Humidity), color.White)
 
 	w.SetContent(
