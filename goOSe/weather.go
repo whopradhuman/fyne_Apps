@@ -3,10 +3,13 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+
 	"fyne.io/fyne/v2"
+
 	//"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+
 	//"fyne.io/fyne/v2/widget"
 	"image/color"
 	"io/ioutil"
@@ -19,7 +22,7 @@ func showWeatherApp(w fyne.Window) {
 
 	//w.Resize(fyne.Size{220, 330})
 
-	res, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=noida&appid=5a331712bca9f6430f531c08db40d33b")
+	res, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=noida&appid=YourAPIKeyHere")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -45,17 +48,17 @@ func showWeatherApp(w fyne.Window) {
 
 	label2 := canvas.NewText(fmt.Sprintf("Country %s", weather.Sys.Country), color.White)
 	label3 := canvas.NewText(fmt.Sprintf("Wind Speed %.2f", weather.Wind.Speed), color.White)
-	label4 := canvas.NewText(fmt.Sprintf("Temperature %.2f", weather.Main.Temp - 273.15), color.White)
+	label4 := canvas.NewText(fmt.Sprintf("Temperature %.2f", weather.Main.Temp-273.15), color.White)
 	label5 := canvas.NewText(fmt.Sprintf("Humidity %2d", weather.Main.Humidity), color.White)
 
 	weatherContainer := container.NewVBox(
-				img,
-				label1,
-				label2,
-				label3,
-				label4,
-				label5,
-			)
+		img,
+		label1,
+		label2,
+		label3,
+		label4,
+		label5,
+	)
 
 	w.SetContent(container.NewBorder(panelContent, nil, nil, nil, weatherContainer))
 
