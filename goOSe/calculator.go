@@ -1,18 +1,19 @@
 package main
 
 import (
-	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
+	//"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 	"github.com/Knetic/govaluate"
 	"strconv"
 )
 
-func main() {
-	a := app.New()   // a is app
-	w := a.NewWindow("Calculator")  //w is widget
-	w.Resize(fyne.Size{500, 330})
+func showCalculatorApp() {
+	//a := app.New()   // a is app
+	//w := a.NewWindow("Calculator")  //w is widget
+	//w.Resize(fyne.Size{500, 330})
+
+	w := myApp.NewWindow("Calculator")
 
 	output := ""
 
@@ -25,13 +26,15 @@ func main() {
 	var historyArr []string
 
 	historyBtn := widget.NewButton("History", func() {
-		for i := len(historyArr) - 1; i >= 0; i-- {
-			history += historyArr[i] + "\n"
+		if !historyPrinted{
+			for i := len(historyArr) - 1; i >= 0; i-- {
+				history += historyArr[i] + "\n"
+			}
+		} else {
+			history = ""
 		}
-		if historyPrinted == false{
-			historyBox.SetText(history)
-			historyPrinted = true
-		}
+		historyPrinted = !historyPrinted
+		historyBox.SetText(history)
 	})
 
 	backBtn := widget.NewButton("Back", func() {
@@ -137,8 +140,6 @@ func main() {
 		if err == nil {
 			result, err := expression.Evaluate(nil)
 			if err == nil {
-				historyPrinted = false
-				history = ""
 				ans := strconv.FormatFloat(result.(float64), 'f', -1, 64)
 				strToAdd := output + " = " + ans
 				historyArr = append(historyArr, strToAdd)
@@ -152,51 +153,52 @@ func main() {
 		ioBox.SetText(output)
 	})
 
-	w.SetContent(container.NewVBox(
-		ioBox,
-		historyBox,
-		container.NewGridWithColumns(2,
-			historyBtn,
-			backBtn,
-		),
-
-		container.NewGridWithColumns(4,
-			clearBtn,
-			bracStartBtn,
-			bracEndBtn,
-			divideBtn,
-		),
-
-		container.NewGridWithColumns(4,
-			sevenBtn,
-			eightBtn,
-			nineBtn,
-			multiplyBtn,
-		),
-
-		container.NewGridWithColumns(4,
-			fourBtn,
-			fiveBtn,
-			sixBtn,
-			subtractBtn,
-		),
-
-		container.NewGridWithColumns(4,
-			oneBtn,
-			twoBtn,
-			threeBtn,
-			additionBtn,
-		),
-
-		container.NewGridWithColumns(2,
+	calcContainer := container.NewVBox(
+			ioBox,
+			historyBox,
 			container.NewGridWithColumns(2,
-				zeroBtn,
-				dotBtn,
-				),
-				equalsBtn,
-		),
+				historyBtn,
+				backBtn,
+			),
 
-	))
+			container.NewGridWithColumns(4,
+				clearBtn,
+				bracStartBtn,
+				bracEndBtn,
+				divideBtn,
+			),
 
-		w.ShowAndRun()
+			container.NewGridWithColumns(4,
+				sevenBtn,
+				eightBtn,
+				nineBtn,
+				multiplyBtn,
+			),
+
+			container.NewGridWithColumns(4,
+				fourBtn,
+				fiveBtn,
+				sixBtn,
+				subtractBtn,
+			),
+
+			container.NewGridWithColumns(4,
+				oneBtn,
+				twoBtn,
+				threeBtn,
+				additionBtn,
+			),
+
+			container.NewGridWithColumns(2,
+				container.NewGridWithColumns(2,
+					zeroBtn,
+					dotBtn,
+					),
+					equalsBtn,
+			),
+
+		)
+
+		w.SetContent(container.NewBorder(nil, nil, nil, nil, calcContainer))
+		w.Show()
 }

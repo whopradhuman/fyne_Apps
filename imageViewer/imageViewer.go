@@ -16,7 +16,7 @@ func main() {
 	w.Resize(fyne.Size{800, 450})
 	//hello := widget.NewLabel("Hello")
 
-	path := "/home/prxd/Pictures/"
+	path := "directory_path_here"
 
 	files, err := ioutil.ReadDir(path)
 	if err != nil {

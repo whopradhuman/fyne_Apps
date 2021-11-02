@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
+	//"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	//"fyne.io/fyne/v2/widget"
@@ -13,13 +13,13 @@ import (
 	"net/http"
 )
 
-func main() {
-	a := app.New()
-	w := a.NewWindow("Weather")
+func showWeatherApp(w fyne.Window) {
+	//a := app.New()
+	//w := a.NewWindow("Weather")
 
 	//w.Resize(fyne.Size{220, 330})
 
-	res, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=noida&appid=YourApiKeyHere")
+	res, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=noida&appid=5a331712bca9f6430f531c08db40d33b")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -48,17 +48,18 @@ func main() {
 	label4 := canvas.NewText(fmt.Sprintf("Temperature %.2f", weather.Main.Temp - 273.15), color.White)
 	label5 := canvas.NewText(fmt.Sprintf("Humidity %2d", weather.Main.Humidity), color.White)
 
-	w.SetContent(
-		container.NewVBox(
-			img,
-			label1,
-			label2,
-			label3,
-			label4,
-			label5,
-		),
-	)
-	w.ShowAndRun()
+	weatherContainer := container.NewVBox(
+				img,
+				label1,
+				label2,
+				label3,
+				label4,
+				label5,
+			)
+
+	w.SetContent(container.NewBorder(panelContent, nil, nil, nil, weatherContainer))
+
+	w.Show()
 }
 
 // This file was generated from JSON Schema using quicktype, do not modify it directly.

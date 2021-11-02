@@ -19,7 +19,7 @@ func main() {
 
 	//w.Resize(fyne.Size{220, 330})
 
-	res, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=noida&appid=3a2dbe6d91cdd8b9cad883855f1666ed")
+	res, err := http.Get("http://api.openweathermap.org/data/2.5/weather?q=noida&appid=YourApiKeyHere")
 	if err != nil {
 		fmt.Println(err)
 	}

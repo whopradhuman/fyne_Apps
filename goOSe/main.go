@@ -4,6 +4,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
@@ -20,25 +21,47 @@ var deskBtn fyne.Widget
 
 var img fyne.CanvasObject
 
-var panContent *fyne.Container
+var panelContent *fyne.Container
+
 
 func main() {
 	myApp.Settings().SetTheme(theme.DarkTheme())
-	img = canvas.NewImageFromFile("background")
+	img = canvas.NewImageFromFile("background.jpg")
 
-	calcBtn = widget.NewButton("Calculator", func() {
-
+	calcBtn = widget.NewButtonWithIcon("Calculator", theme.ContentAddIcon(), func() {
+		showCalculatorApp()
 	})
 
-	picBtn = widget.NewButton("Gallery", func() {
-
+	picBtn = widget.NewButtonWithIcon("Gallery", theme.FileImageIcon(), func() {
+		showGalleryApp(myWin)
 	})
 
-	weaBtn = widget.NewButton("Weather", func() {
-
+	weaBtn = widget.NewButtonWithIcon("Weather", theme.InfoIcon(), func() {
+		showWeatherApp(myWin)
 	})
 
-	ediBtn = widget.NewButton("Text Editor", func() {
-
+	ediBtn = widget.NewButtonWithIcon("Text Editor", theme.DocumentIcon(), func() {
+		showTextApp()
 	})
+
+	deskBtn = widget.NewButtonWithIcon("Home", theme.HomeIcon(), func() {
+		myWin.SetContent(container.NewBorder(panelContent, nil, nil, nil, img))
+	})
+
+	panelContent = container.NewVBox(
+		container.NewGridWithColumns(5,
+			deskBtn,
+			weaBtn,
+			calcBtn,
+			picBtn,
+			ediBtn,
+		),
+	)
+
+	myWin.Resize(fyne.NewSize(1920, 1080))
+	myWin.CenterOnScreen()
+
+	myWin.SetContent(container.NewBorder(panelContent, nil, nil, nil, img))
+
+	myWin.ShowAndRun()
 }

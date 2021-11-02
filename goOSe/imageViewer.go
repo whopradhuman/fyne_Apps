@@ -2,7 +2,7 @@ package main
 
 import (
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
+	//"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"io/ioutil"
@@ -10,13 +10,13 @@ import (
 	"strings"
 )
 
-func main() {
-	a:= app.New()
-	w := a.NewWindow("Image Viewer")
-	w.Resize(fyne.Size{800, 450})
+func showGalleryApp(w fyne.Window) {
+	//a:= app.New()
+	//w := a.NewWindow("Image Viewer")
+	//w.Resize(fyne.Size{800, 450})
 	//hello := widget.NewLabel("Hello")
 
-	path := "directory_path_here"
+	path := "/home/prxd/Pictures/"
 
 	files, err := ioutil.ReadDir(path)
 	if err != nil {
@@ -57,10 +57,7 @@ func main() {
 	//}
 
 	tabs.SetTabLocation(container.TabLocationTrailing)
-	w.SetContent(
-		tabs,
-		)
-
+	imageContainer := tabs
 
 
 
@@ -68,5 +65,7 @@ func main() {
 	//	hello,
 	//	))
 
-	w.ShowAndRun()
+	w.SetContent(container.NewBorder(panelContent, nil, nil, nil, imageContainer))
+
+	w.Show()
 }

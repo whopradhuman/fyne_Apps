@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/storage"
@@ -11,16 +9,16 @@ import (
 	"io/ioutil"
 )
 
-var count int = 1
-func main() {
+//var count int = 1
+func showTextApp() {
 
 
+	w := myApp.NewWindow("Calculator")
+	//fmt.Println("Hello Texty!")
+	//a := app.New()
+	//w := a.NewWindow("Texty")
 
-	fmt.Println("Hello Texty!")
-	a := app.New()
-	w := a.NewWindow("Texty")
-
-	w.Resize(fyne.Size{600, 400})
+	//w.Resize(fyne.Size{600, 400})
 	content := container.NewVBox(
 		widget.NewLabel("Hey Texty"),
 		)
@@ -75,18 +73,19 @@ func main() {
 		openDialog.Show()
 	})
 
-	w.SetContent(
-		container.NewVBox(
-			content,
-			inputField,
-			//container.NewHBox(
-				container.NewGridWithColumns( 2,
-						saveBtn,
-						openBtn,
-					),
-				//),
-			),
-		)
+	textContainer := container.NewVBox(
+				content,
+				inputField,
+				//container.NewHBox(
+					container.NewGridWithColumns( 2,
+							saveBtn,
+							openBtn,
+						),
+					//),
+				)
 
-	w.ShowAndRun()
+
+	w.SetContent(container.NewBorder(deskBtn, nil, nil, nil, textContainer))
+
+	w.Show()
 }
